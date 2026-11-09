@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CartShare - A collaborative, real-time shared shopping ecosystem for student dorms, roomies, and office teams.">
+  <meta name="theme-color" content="#2563eb">
+  <title>CartShare — Collaborative Shopping Ecosystem</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <link rel="icon" type="image/svg+xml" href="assets/icons/logo.svg">
+</head>
+<body>
+
+  <section id="view-login" class="login-page-view min-vh-100 d-flex align-items-center justify-content-center p-3 p-md-4 view-transition">
+    <div class="login-card p-4 p-md-5 w-100 shadow-xl">
+
+      <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center gap-2 mb-2">
+          <div class="login-brand-icon">
+            <svg width="38" height="38" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 8h6l4.2 18.2c.4 1.7 2 2.8 3.8 2.8h17c1.7 0 3.2-1.2 3.6-2.8L43 14H14.5" stroke="#2563eb" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="21" cy="38" r="3.5" fill="#0f172a"/>
+              <circle cx="34" cy="38" r="3.5" fill="#0f172a"/>
+              <circle cx="34" cy="14" r="7.5" fill="#10b981"/>
+              <path d="M31.5 14h5M34 11.5v5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="fs-2 fw-bolder text-primary">Cart<span class="text-dark">Share</span></span>
+        </div>
+        <h4 class="fw-bold text-dark mb-1">Collaborative Shopping Ecosystem</h4>
+        <p class="text-muted small mb-0">Join or create a shared room to pool items, track free delivery, and split costs in real-time.</p>
+      </div>
+
+      <form id="mainLoginForm">
+
+        <div class="mb-3">
+          <label for="pageInputUserName" class="form-label fw-bold text-dark d-flex justify-content-between">
+            <span>1. Enter Your Name</span>
+            <span class="text-muted small fw-normal">Required</span>
+          </label>
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0 text-primary"><i class="bi bi-person-fill"></i></span>
+            <input type="text" class="form-control border-start-0 ps-1" id="pageInputUserName" placeholder="e.g. Aahel Gupta, Sarah, Jordan..." required autofocus>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold text-dark small mb-2">Choose Your Avatar</label>
+          <div class="d-flex flex-wrap gap-2 justify-content-center" id="pageAvatarSelectorContainer">
+            
+          </div>
+        </div>
+
+        <div class="card bg-light border-0 p-3 rounded-4 mb-4">
+          <label class="form-label fw-bold text-dark small mb-2">2. Shopping Room Setup</label>
+          
+          <ul class="nav nav-pills nav-fill bg-white p-1 rounded-3 shadow-xs mb-3" id="pageRoomTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active fw-bold small py-2" id="tab-login-join" data-bs-toggle="pill" data-bs-target="#pane-login-join" type="button" role="tab">
+                <i class="bi bi-door-open-fill me-1"></i> Join Room
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link fw-bold small py-2" id="tab-login-create" data-bs-toggle="pill" data-bs-target="#pane-login-create" type="button" role="tab">
+                <i class="bi bi-plus-circle-fill me-1"></i> Create Room
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="pageRoomTabContent">
+            
+            <div class="tab-pane fade show active" id="pane-login-join" role="tabpanel">
+              <div class="mb-1">
+                <label for="pageInputRoomCode" class="form-label small text-muted fw-semibold">Enter 6-digit Room Code</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white border-end-0 text-muted font-monospace"><i class="bi bi-key-fill"></i></span>
+                  <input type="text" class="form-control border-start-0 font-monospace text-uppercase fw-bold" id="pageInputRoomCode" placeholder="e.g. CART-4921" maxlength="15">
+                </div>
+                <div class="form-text small" id="pageRoomDetectedNote">Enter the room code shared by your group, or click "Create Room" above.</div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="pane-login-create" role="tabpanel">
+              <div class="mb-2">
+                <label for="pageInputNewRoomName" class="form-label small text-muted fw-semibold">Room Name / Purpose</label>
+                <input type="text" class="form-control" id="pageInputNewRoomName" placeholder="e.g. Dorm 4B Weekly Groceries">
+              </div>
+              <div>
+                <label for="pageInputThreshold" class="form-label small text-muted fw-semibold">Free Delivery Target (₹)</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-white border-end-0 text-success fw-bold">₹</span>
+                  <input type="number" class="form-control border-start-0" id="pageInputThreshold" value="750.00" min="100" step="50">
+                </div>
+                <div class="form-text small">Orders pooling to this amount unlock free delivery (₹49 saved).</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold rounded-3 shadow-md d-flex align-items-center justify-content-center gap-2 mb-3">
+          <span>Enter Room &amp; Start Shopping</span>
+          <i class="bi bi-arrow-right-circle-fill"></i>
+        </button>
+      </form>
+
+      <div class="text-center pt-3 border-top">
+        <small class="text-muted fw-semibold d-block mb-2">Simulate Multiple Roommates (1-Click Test Users):</small>
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+          <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 page-demo-btn" data-name="Aahel Gupta" data-avatar="👨‍💻" data-color="#2563eb">👨‍💻 Aahel</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 page-demo-btn" data-name="Sarah Jenkins" data-avatar="👩‍🎨" data-color="#0d9488">👩‍🎨 Sarah</button>
+          <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 page-demo-btn" data-name="Alex Chen" data-avatar="🧑‍🔬" data-color="#8b5cf6">🧑‍🔬 Alex</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div id="view-app" class="d-none min-vh-100 flex-column view-transition">
+
+    <header class="app-navbar no-print">
+      <div class="container-fluid px-lg-4 d-flex align-items-center justify-content-between">
+
+        <div class="d-flex align-items-center gap-3">
+          <a href="#" id="navBrandLink" class="brand-badge text-decoration-none">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 8h6l4.2 18.2c.4 1.7 2 2.8 3.8 2.8h17c1.7 0 3.2-1.2 3.6-2.8L43 14H14.5" stroke="#2563eb" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="21" cy="38" r="3.5" fill="#0f172a"/>
+              <circle cx="34" cy="38" r="3.5" fill="#0f172a"/>
+              <circle cx="34" cy="14" r="7.5" fill="#10b981"/>
+              <path d="M31.5 14h5M34 11.5v5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <div>
+              <div class="lh-1">Cart<span class="text-dark">Share</span></div>
+              <span class="brand-tagline d-none d-sm-inline">Collaborative Shopping</span>
+            </div>
+          </a>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 gap-md-3">
+
+          <div id="roomPillContainer" class="d-flex align-items-center">
+            <button id="btnRoomInfo" class="room-chip" data-bs-toggle="modal" data-bs-target="#roomShareModal" title="Click to share room code or invite link">
+              <span class="live-indicator"></span>
+              <span class="d-none d-sm-inline">Room:</span>
+              <span id="currentRoomCodeLabel" class="font-monospace">ROOM-XXXX</span>
+              <i class="bi bi-share-fill ms-1 opacity-75"></i>
+            </button>
+          </div>
+
+          <div id="activeMembersStack" class="member-stack d-none d-md-flex" title="Active participants in this room">
+            
+          </div>
+
+          <div class="dropdown">
+            <button class="btn btn-light rounded-pill border d-flex align-items-center gap-2 py-1 px-2 px-sm-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span id="navUserAvatar" class="fs-5">👤</span>
+              <span id="navUserName" class="fw-semibold d-none d-sm-inline">Guest User</span>
+              <i class="bi bi-chevron-down text-muted small"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li><h6 class="dropdown-header">Active Session</h6></li>
+              <li><button class="dropdown-item d-flex align-items-center gap-2" id="navBtnLogout"><i class="bi bi-box-arrow-left text-danger"></i> Switch User / Log Out</button></li>
+              <li><button class="dropdown-item d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#roomShareModal"><i class="bi bi-people"></i> Room & Invite Settings</button></li>
+              <li><button class="dropdown-item d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#futureEnhancementsModal"><i class="bi bi-rocket-takeoff"></i> Future Architecture</button></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button id="btnSwitchRoom" class="dropdown-item text-secondary d-flex align-items-center gap-2"><i class="bi bi-door-closed"></i> Leave / Switch Room</button></li>
+              <li><button id="btnDeleteRoomNav" class="dropdown-item text-danger d-flex align-items-center gap-2"><i class="bi bi-trash3-fill"></i> Delete Room (Permanent)</button></li>
+            </ul>
+          </div>
+
+          <button id="btnOpenMobileCart" class="btn btn-primary d-lg-none position-relative rounded-pill px-3" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas" aria-controls="cartOffcanvas">
+            <i class="bi bi-cart3 me-1"></i>
+            <span class="d-none d-sm-inline">Cart</span>
+            <span id="mobileCartBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+  <main class="container-fluid px-lg-4 py-4 flex-grow-1">
+
+    <section class="threshold-container no-print" id="thresholdContainer">
+      <div class="threshold-header">
+        <div class="threshold-title">
+          <span id="thresholdStatusIcon" class="fs-4">🚚</span>
+          <div>
+            <span id="thresholdStatusHeadline" class="fw-bold">Group Delivery Threshold Tracker</span>
+            <span id="thresholdBadge" class="badge bg-primary ms-2">₹750.00 Target</span>
+          </div>
+        </div>
+        <div class="threshold-status-text text-md-end">
+          <span id="thresholdStatusMessage" class="fw-bold text-primary">Add ₹750.00 more to unlock FREE Delivery!</span>
+          <small class="text-muted d-block" id="thresholdSubmessage">Standard delivery fee: ₹49.00</small>
+        </div>
+      </div>
+      <div class="threshold-progress-bar">
+        <div id="thresholdFillBar" class="threshold-fill" style="width: 0%;"></div>
+      </div>
+      <div class="threshold-milestones">
+        <span>₹0 Start</span>
+        <span>₹250 Split Starter</span>
+        <span>₹500 Halfway Free</span>
+        <span class="fw-bold text-success">₹750.00 FREE SHIPPING UNLOCKED 🎉</span>
+      </div>
+    </section>
+
+    <div class="row g-4">
+
+      <section class="col-lg-8 col-xl-8 product-catalog-col no-print">
+
+        <div class="row g-2 align-items-center mb-3">
+          <div class="col-12 col-md-8">
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+              <input type="text" id="catalogSearchInput" class="form-control border-start-0 ps-0" placeholder="Search groceries, snacks, pantry, dorm supplies..." aria-label="Search products">
+            </div>
+          </div>
+          <div class="col-12 col-md-4 text-md-end">
+            <button class="btn btn-outline-primary w-100 rounded-pill d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#customItemModal">
+              <i class="bi bi-plus-circle-fill"></i>
+              <span>Request Custom Item</span>
+            </button>
+          </div>
+        </div>
+
+        <nav class="category-nav-wrapper" id="categoryNavWrapper" aria-label="Product categories">
+          
+        </nav>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-xl-3 g-3" id="productGridContainer">
+          
+        </div>
+
+      </section>
+
+      <aside class="col-lg-4 col-xl-4 no-print d-none d-lg-block">
+
+        <div class="cart-sidebar-card shadow-sm">
+
+          <div class="cart-header">
+            <div>
+              <h5 class="mb-0 fw-bold d-flex align-items-center gap-2">
+                <i class="bi bi-cart-check-fill text-primary"></i>
+                <span>Shared Room Cart</span>
+              </h5>
+              <small class="text-muted" id="cartRoomNameLabel">Apartment 4B Shared Run</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <span id="cartItemCountBadge" class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">0 items</span>
+              <button id="btnClearCartBtn" class="btn btn-sm btn-outline-danger" title="Clear all items in cart">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="cart-items-scrollable" id="cartItemsList">
+            
+          </div>
+
+          <div class="cart-summary-box">
+            <div class="summary-line">
+              <span>Items Subtotal</span>
+              <span id="summarySubtotal" class="fw-semibold">₹0.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Estimated GST (5%)</span>
+              <span id="summaryTax" class="fw-semibold">₹0.00</span>
+            </div>
+            <div class="summary-line">
+              <span>Delivery Fee</span>
+              <span id="summaryDeliveryFee" class="fw-semibold">₹49.00</span>
+            </div>
+            <div class="summary-line text-success" id="summarySavingsLine" style="display: none;">
+              <span class="d-flex align-items-center gap-1"><i class="bi bi-gift-fill"></i> Free Delivery Promo</span>
+              <span id="summarySavings" class="fw-bold">-₹49.00</span>
+            </div>
+
+            <div class="summary-line summary-total">
+              <span>Group Total</span>
+              <span id="summaryGrandTotal" class="text-primary">₹0.00</span>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button id="btnViewReceipt" class="btn btn-primary fw-semibold py-2 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#receiptModal">
+                <i class="bi bi-receipt"></i>
+                <span>View & Print Group Receipt</span>
+              </button>
+              
+              <button class="btn btn-outline-secondary fw-semibold py-2 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#splitModal">
+                <i class="bi bi-pie-chart-fill"></i>
+                <span>Who Owes What? (Expense Split)</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="activity-feed-card shadow-sm">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <h6 class="mb-0 fw-bold d-flex align-items-center gap-2 text-dark">
+              <i class="bi bi-broadcast text-danger"></i>
+              <span>Live Room Activity</span>
+            </h6>
+            <span class="badge bg-light text-muted border">Real-Time</span>
+          </div>
+          <div id="desktopActivityList" class="activity-feed-list" style="max-height: 220px; overflow-y: auto;">
+            
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <div class="mobile-cart-float-bar no-print d-lg-none">
+    <div>
+      <div class="small text-muted">Room Total (<span id="mobileFloatItemCount">0</span> items)</div>
+      <div id="mobileFloatTotal" class="fw-bold fs-5 text-primary">₹0.00</div>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#splitModal">
+        <i class="bi bi-pie-chart-fill"></i> Split
+      </button>
+      <button class="btn btn-primary fw-semibold px-3" data-bs-toggle="offcanvas" data-bs-target="#cartOffcanvas">
+        <i class="bi bi-cart-fill me-1"></i> View Cart
+      </button>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-end no-print" tabindex="-1" id="cartOffcanvas" aria-labelledby="cartOffcanvasLabel">
+    <div class="offcanvas-header border-bottom">
+      <div>
+        <h5 class="offcanvas-title fw-bold" id="cartOffcanvasLabel">
+          <i class="bi bi-cart3 text-primary me-1"></i> Shared Room Cart
+        </h5>
+        <small class="text-muted" id="mobileOffcanvasRoomCode">Room Code</small>
+      </div>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body d-flex flex-column p-0">
+
+      <div class="cart-items-scrollable p-3 flex-grow-1" id="mobileCartItemsList">
+        
+      </div>
+
+      <div class="cart-summary-box p-3 border-top">
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span id="mobileSummarySubtotal" class="fw-semibold">₹0.00</span>
+        </div>
+        <div class="summary-line">
+          <span>GST (5%)</span>
+          <span id="mobileSummaryTax" class="fw-semibold">₹0.00</span>
+        </div>
+        <div class="summary-line">
+          <span>Delivery</span>
+          <span id="mobileSummaryDelivery" class="fw-semibold">₹49.00</span>
+        </div>
+        <div class="summary-line summary-total">
+          <span>Total</span>
+          <span id="mobileSummaryTotal" class="text-primary">₹0.00</span>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary fw-semibold" data-bs-dismiss="offcanvas" data-bs-toggle="modal" data-bs-target="#receiptModal">
+            <i class="bi bi-receipt me-1"></i> View & Print Receipt
+          </button>
+          <button class="btn btn-outline-secondary fw-semibold" data-bs-dismiss="offcanvas" data-bs-toggle="modal" data-bs-target="#splitModal">
+            <i class="bi bi-pie-chart me-1"></i> Who Owes What?
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div> 
+
+  <div class="modal fade no-print" id="userLoginModal" tabindex="-1" aria-labelledby="userLoginModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold" id="userLoginModalLabel">
+            <i class="bi bi-people-fill me-2"></i> Join CartShare Ecosystem
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="btnCloseLoginModal" style="display: none;"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="text-muted small">Collaborate on group grocery and supply runs in real-time with roommates or office teams.</p>
+          
+          <form id="userLoginForm">
+            <div class="mb-3">
+              <label for="inputUserName" class="form-label fw-bold">Your Name / Nickname</label>
+              <input type="text" class="form-control" id="inputUserName" placeholder="e.g. Aahel, Sarah, Jordan..." required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold">Select Your Avatar</label>
+              <div class="d-flex flex-wrap gap-2" id="avatarSelectorContainer">
+                
+              </div>
+            </div>
+
+            <ul class="nav nav-pills nav-fill mb-3" id="roomActionTabs" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-semibold" id="tab-join-room" data-bs-toggle="pill" data-bs-target="#pane-join-room" type="button" role="tab">Join Existing Room</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link fw-semibold" id="tab-create-room" data-bs-toggle="pill" data-bs-target="#pane-create-room" type="button" role="tab">Create New Room</button>
+              </li>
+            </ul>
+
+            <div class="tab-content" id="roomActionTabContent">
+              
+              <div class="tab-pane fade show active" id="pane-join-room" role="tabpanel">
+                <div class="mb-3">
+                  <label for="inputJoinRoomCode" class="form-label fw-semibold">Enter Room Code</label>
+                  <input type="text" class="form-control font-monospace text-uppercase" id="inputJoinRoomCode" placeholder="e.g. CART-4921" maxlength="15">
+                  <div class="form-text">Paste the room code shared by your roommate or host.</div>
+                </div>
+              </div>
+
+              <div class="tab-pane fade" id="pane-create-room" role="tabpanel">
+                <div class="mb-3">
+                  <label for="inputNewRoomName" class="form-label fw-semibold">Room Name / Purpose</label>
+                  <input type="text" class="form-control" id="inputNewRoomName" placeholder="e.g. Dorm 4B Weekly Groceries">
+                </div>
+                <div class="mb-3">
+                  <label for="inputRoomThreshold" class="form-label fw-semibold">Free Delivery Target (₹)</label>
+                  <div class="input-group">
+                    <span class="input-group-text">₹</span>
+                    <input type="number" class="form-control" id="inputRoomThreshold" value="750.00" min="100" step="50">
+                  </div>
+                  <div class="form-text">Orders above this amount unlock group free shipping!</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-primary fw-bold py-2">
+                Enter CartShare Room
+              </button>
+            </div>
+          </form>
+
+          <div class="border-top mt-4 pt-3 text-center">
+            <small class="text-muted d-block mb-2">Quick Test Profiles (for simulating multiple users):</small>
+            <div class="d-flex justify-content-center gap-2">
+              <button type="button" class="btn btn-sm btn-outline-secondary demo-user-btn" data-name="Aahel Gupta" data-avatar="👨‍💻" data-color="#2563eb">👨‍💻 Aahel</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary demo-user-btn" data-name="Sarah Jenkins" data-avatar="👩‍🎨" data-color="#0d9488">👩‍🎨 Sarah</button>
+              <button type="button" class="btn btn-sm btn-outline-secondary demo-user-btn" data-name="Alex Chen" data-avatar="🧑‍🔬" data-color="#8b5cf6">🧑‍🔬 Alex</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade no-print" id="roomShareModal" tabindex="-1" aria-labelledby="roomShareModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header border-bottom">
+          <h5 class="modal-title fw-bold" id="roomShareModalLabel">
+            <i class="bi bi-people-fill text-primary me-2"></i> Room Invite & Collaboration
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          
+          <div class="text-center mb-4">
+            <div class="text-muted small text-uppercase fw-bold letter-spacing-1">Current Active Room</div>
+            <div class="display-6 fw-bold text-primary font-monospace my-1" id="modalRoomCodeDisplay">CART-XXXX</div>
+            <div class="text-secondary fw-semibold" id="modalRoomNameDisplay">Dorm Groceries</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-bold small text-muted">Direct Room Invite Link</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="modalInviteLinkInput" readonly>
+              <button class="btn btn-primary" id="btnCopyInviteLink" type="button">
+                <i class="bi bi-clipboard-check me-1"></i> Copy Link
+              </button>
+            </div>
+          </div>
+
+          <div class="d-grid mb-3">
+            <button class="btn btn-outline-secondary" id="btnCopyRoomCodeOnly" type="button">
+              <i class="bi bi-copy me-1"></i> Copy Room Code Only
+            </button>
+          </div>
+
+          <div class="mt-4 pt-3 border-top">
+            <h6 class="fw-bold mb-2 text-dark d-flex align-items-center justify-content-between">
+              <span>Connected Participants</span>
+              <span class="badge bg-success-subtle text-success-emphasis" id="modalMemberCountBadge">1 Member</span>
+            </h6>
+            <div id="modalMembersList" class="list-group list-group-flush">
+              
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-top">
+            <div class="d-flex align-items-center justify-content-between p-3 bg-danger-subtle border border-danger-subtle rounded-3">
+              <div>
+                <div class="fw-bold text-danger"><i class="bi bi-trash3-fill me-1"></i> Delete Room</div>
+                <small class="text-muted">Permanently delete this room, its shared cart, and all history.</small>
+              </div>
+              <button type="button" class="btn btn-outline-danger btn-sm fw-bold ms-2" id="btnDeleteRoomModal">
+                Delete Room
+              </button>
+            </div>
+          </div>
+
+          <div class="alert alert-info mt-3 py-2 px-3 small d-flex align-items-start gap-2">
+            <i class="bi bi-info-circle-fill text-info mt-1"></i>
+            <div>
+              <strong>Multi-Tab Real-Time Sync:</strong> Open the copied invite link in a new browser tab or Incognito window with another name to watch live updates across tabs!
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade no-print" id="customItemModal" tabindex="-1" aria-labelledby="customItemModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="customItemModalLabel">
+            <i class="bi bi-cart-plus text-primary me-2"></i> Request Custom Item
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="text-muted small">Can't find what you need in the catalog? Add any specialty or requested item for your group order.</p>
+
+          <form id="customItemForm">
+            <div class="mb-3">
+              <label for="customItemName" class="form-label fw-bold">Item Name</label>
+              <input type="text" class="form-control" id="customItemName" placeholder="e.g. Gluten-Free Bread, Matcha Tea, Triple-A Batteries" required>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <div class="col-6">
+                <label for="customItemPrice" class="form-label fw-bold">Estimated Price (₹)</label>
+                <div class="input-group">
+                  <span class="input-group-text">₹</span>
+                  <input type="number" step="0.01" min="0.10" class="form-control" id="customItemPrice" placeholder="120.00" required>
+                </div>
+              </div>
+              <div class="col-6">
+                <label for="customItemQty" class="form-label fw-bold">Quantity</label>
+                <input type="number" min="1" max="99" value="1" class="form-control" id="customItemQty" required>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="customItemCategory" class="form-label fw-bold">Category</label>
+              <select class="form-select" id="customItemCategory">
+                <option value="groceries">Fresh Groceries</option>
+                <option value="pantry">Pantry & Staples</option>
+                <option value="snacks">Snacks & Drinks</option>
+                <option value="dorm">Dorm & Cleaning</option>
+                <option value="study">Study & Work</option>
+                <option value="other" selected>Other Custom Request</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="customItemNotes" class="form-label fw-bold">Special Instructions / Brand Preference</label>
+              <textarea class="form-control" id="customItemNotes" rows="2" placeholder="e.g. Brand Preference, preferred size, dietary note..."></textarea>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary fw-bold py-2">
+                Add to Shared Cart
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade no-print" id="splitModal" tabindex="-1" aria-labelledby="splitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-light">
+          <h5 class="modal-title fw-bold" id="splitModalLabel">
+            <i class="bi bi-pie-chart-fill text-primary me-2"></i> Expense Split Breakdown ("Who Owes What")
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="text-muted small">Automatic fair division: Each participant pays for their own items, plus their proportional share of sales tax, and equal share of delivery (if under ₹750 threshold).</p>
+          
+          <div id="splitBreakdownContainer">
+            
+          </div>
+        </div>
+        <div class="modal-footer bg-light justify-content-between">
+          <div class="text-muted small">Fair bill-splitting ready for Venmo / Zelle / Cash</div>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close Breakdown</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header no-print border-bottom">
+          <h5 class="modal-title fw-bold" id="receiptModalLabel">
+            <i class="bi bi-receipt-cutoff text-primary me-2"></i> Audit-Ready Group Order Receipt
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body p-3 p-md-4">
+
+          <div class="receipt-wrapper" id="printableReceiptArea">
+
+            <div class="receipt-header">
+              <div>
+                <div class="receipt-logo">
+                  <svg width="28" height="28" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 8h6l4.2 18.2c.4 1.7 2 2.8 3.8 2.8h17c1.7 0 3.2-1.2 3.6-2.8L43 14H14.5" stroke="#000000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="21" cy="38" r="3.5" fill="#000000"/>
+                    <circle cx="34" cy="38" r="3.5" fill="#000000"/>
+                  </svg>
+                  <span>CartShare Group Receipt</span>
+                </div>
+                <div class="text-muted small mt-1">Official Shared Order Summary & Audit Sheet</div>
+              </div>
+              <div class="text-end">
+                <div class="fw-bold font-monospace" id="receiptOrderNumber">CS-REC-202611-0001</div>
+                <div class="small text-muted" id="receiptTimestamp">Nov 9, 2026</div>
+              </div>
+            </div>
+
+            <div class="row g-2 p-3 bg-light rounded mb-4">
+              <div class="col-6 col-md-3">
+                <div class="small text-muted text-uppercase fw-bold">Room Code</div>
+                <div class="fw-bold font-monospace" id="receiptRoomCode">CART-XXXX</div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="small text-muted text-uppercase fw-bold">Room Name</div>
+                <div class="fw-semibold" id="receiptRoomName">Apartment Groceries</div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="small text-muted text-uppercase fw-bold">Generated By</div>
+                <div class="fw-semibold" id="receiptGeneratedBy">Aahel Gupta</div>
+              </div>
+              <div class="col-6 col-md-3">
+                <div class="small text-muted text-uppercase fw-bold">Active Members</div>
+                <div class="fw-semibold" id="receiptParticipants">3 People</div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="receipt-table">
+                <thead>
+                  <tr>
+                    <th>Item Description</th>
+                    <th>Added By</th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-end">Unit Price</th>
+                    <th class="text-end">Line Total</th>
+                  </tr>
+                </thead>
+                <tbody id="receiptItemTableBody">
+                  
+                </tbody>
+              </table>
+            </div>
+
+            <div class="row justify-content-end mb-4">
+              <div class="col-12 col-md-6">
+                <div class="p-3 bg-light rounded border">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted">Items Subtotal:</span>
+                    <span id="receiptSubtotal" class="fw-semibold">₹0.00</span>
+                  </div>
+                  <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted">Sales GST (5%):</span>
+                    <span id="receiptTax" class="fw-semibold">₹0.00</span>
+                  </div>
+                  <div class="d-flex justify-content-between mb-1">
+                    <span class="text-muted">Standard Delivery:</span>
+                    <span id="receiptDeliveryFee" class="fw-semibold">₹49.00</span>
+                  </div>
+                  <div class="d-flex justify-content-between mb-2 text-success" id="receiptPromoRow" style="display: none;">
+                    <span class="fw-bold">Free Shipping Discount (₹750+):</span>
+                    <span id="receiptDiscount" class="fw-bold">-₹49.00</span>
+                  </div>
+                  <div class="d-flex justify-content-between pt-2 border-top fs-5 fw-bold text-dark">
+                    <span>Order Total:</span>
+                    <span id="receiptGrandTotal">₹0.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="receipt-splits-table">
+              <h6 class="fw-bold mb-3 text-dark">
+                <i class="bi bi-wallet2 me-1"></i> Individual Contribution Breakdown (Who Pays What)
+              </h6>
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered mb-0 bg-white">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Participant</th>
+                      <th class="text-center">Items</th>
+                      <th class="text-end">Items Subtotal</th>
+                      <th class="text-end">Tax Share</th>
+                      <th class="text-end">Delivery Share</th>
+                      <th class="text-end fw-bold">Total Owed</th>
+                    </tr>
+                  </thead>
+                  <tbody id="receiptSplitsTableBody">
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="text-center text-muted small mt-4 pt-3 border-top">
+              Thank you for using CartShare! Settle balances conveniently with your group roommates.
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="modal-footer no-print bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary fw-bold" id="btnPrintReceiptBtn">
+            <i class="bi bi-printer-fill me-1"></i> Print / Save as PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade no-print" id="futureEnhancementsModal" tabindex="-1" aria-labelledby="futureEnhancementsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fw-bold" id="futureEnhancementsModalLabel">
+            <i class="bi bi-cpu-fill text-warning me-2"></i> Future Roadmap & Architecture
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="text-muted small">As highlighted in the project brief and presentation slides, CartShare is architected for extensible future enterprise scaling:</p>
+          
+          <div class="d-flex align-items-start gap-3 mb-3 p-3 bg-light rounded">
+            <div class="fs-3 text-primary"><i class="bi bi-server"></i></div>
+            <div>
+              <h6 class="fw-bold mb-1">Backend Integration</h6>
+              <p class="small text-muted mb-0">Production Node.js, Express, and MongoDB architecture with user authentication (JWT) and persistent relational collections.</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start gap-3 mb-3 p-3 bg-light rounded">
+            <div class="fs-3 text-info"><i class="bi bi-broadcast-pin"></i></div>
+            <div>
+              <h6 class="fw-bold mb-1">Real-Time Cloud Sync</h6>
+              <p class="small text-muted mb-0">WebSocket or Firebase Firestore live sync enabling cross-network collaboration across different remote physical devices.</p>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-start gap-3 p-3 bg-light rounded">
+            <div class="fs-3 text-success"><i class="bi bi-credit-card-2-front-fill"></i></div>
+            <div>
+              <h6 class="fw-bold mb-1">Integrated Checkout & Split Payments</h6>
+              <p class="small text-muted mb-0">Direct payment gateway integration (Stripe / Razorpay / PayPal) with automated multi-card authorization and past order history.</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed top-0 end-0 p-3 no-print" id="toastContainer" style="z-index: 1080;">
+    
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

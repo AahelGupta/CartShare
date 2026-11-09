@@ -1,0 +1,26 @@
+{
+  "name": "cartshare-collaborative-shopping",
+  "version": "1.0.0",
+  "description": "CartShare - Collaborative Shopping Ecosystem with Real-Time Multi-Tab Synchronization",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite --open",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "cartshare",
+    "collaborative-cart",
+    "bootstrap5",
+    "javascript",
+    "realtime-sync",
+    "html5",
+    "css3"
+  ],
+  "author": "Aahel Gupta",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^6.2.0"
+  }
+}
