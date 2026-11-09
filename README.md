@@ -81,15 +81,15 @@ BatchID_FullName_CartShare/
 ├── README.md               # Project documentation and setup guide
 ├── package.json            # Development dependencies and npm scripts
 ├── vite.config.js          # Vite local development configuration
-├── run.bat                 # One-click Windows local server launcher
 ├── css/
 │   └── style.css           # Responsive styling, design tokens, and @media print rules
 ├── js/
+│   ├── bundle.js           # Standalone bundle for zero-setup browser execution
 │   ├── app.js              # Application controller, DOM manipulation, and UI bindings
 │   ├── cart.js             # Cart business logic, threshold tracker, and expense splitter
 │   ├── room.js             # Room management, member presence, and Clipboard API
 │   ├── storage.js          # LocalStorage persistence & BroadcastChannel cross-tab sync
-│   └── products.js         # Curated catalog of shared living and dorm products
+│   └── products.js         # Curated catalog of 100 products with Indian Rupee (₹) pricing
 └── assets/
     ├── icons/
     │   └── logo.svg        # Scalable vector logo and favicon
@@ -111,35 +111,21 @@ BatchID_FullName_CartShare/
 
 ## 4. How to Run Locally
 
-You can run CartShare with any standard local web server:
+CartShare is built on client-side web technologies (HTML5, CSS3, JavaScript, LocalStorage) with zero backend setup:
 
-### Option A: Using Vite (Recommended)
+### Option A: Direct Browser Launch (Easiest)
+Simply **double-click `index.html`** in any web browser (Chrome, Edge, Firefox, Safari). It runs immediately with zero installation, zero server, and zero terminal commands.
+
+### Option B: VS Code Live Server
+1. Open the `CartShare` folder in VS Code.
+2. Right-click `index.html` and select **"Open with Live Server"**.
+
+### Option C: Using Node / NPM
 ```bash
-# 1. Clone or navigate to the project directory
-cd CartShare
-
-# 2. Start Vite development server
-npm run dev
+npx serve .
 # or
-npx vite --open
+npm run dev
 ```
-
-### Option B: Using Python's Built-in HTTP Server
-```bash
-# In the project directory:
-python -m http.server 3000
-```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-### Option C: Using Node `npx serve`
-```bash
-npx serve -p 3000 .
-```
-
-### Option D: Double-Click `run.bat` (Windows)
-Double-click `run.bat` in the root folder to start a local server automatically.
-
----
 
 ## 5. How to Test Cross-Tab Real-Time Collaboration
 

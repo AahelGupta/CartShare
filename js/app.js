@@ -669,14 +669,14 @@ class CartShareApp {
         <div class="col">
           <div class="product-card">
             
-            <!-- Image & Badges -->
+            
             <div class="product-img-wrapper">
               <img src="${prod.image}" alt="${prod.name}" loading="lazy" onerror="this.src='assets/images/placeholder.svg'">
               ${prod.badge ? `<span class="badge bg-${prod.badgeColor || 'primary'} product-badge-overlay">${prod.badge}</span>` : ''}
               ${cartQty > 0 ? `<span class="product-in-cart-indicator"><i class="bi bi-cart-check-fill me-1"></i>${cartQty} in cart</span>` : ''}
             </div>
 
-            <!-- Card Body -->
+            
             <div class="product-body">
               <h6 class="product-title">${prod.name}</h6>
               <div class="product-unit">${prod.unit}</div>
@@ -767,7 +767,7 @@ class CartShareApp {
               <div class="fw-bold text-dark font-monospace">₹${lineTotal}</div>
             </div>
 
-            <!-- Author Tag -->
+            
             <div class="d-flex align-items-center justify-content-between">
               <span class="cart-item-author-tag" style="border: 1px solid ${author.color || '#e2e8f0'}40;">
                 <span>${author.avatar || '👤'}</span>
@@ -778,7 +778,7 @@ class CartShareApp {
 
             ${item.notes ? `<div class="small text-muted fst-italic mb-2 bg-light p-1 rounded">"${item.notes}"</div>` : ''}
 
-            <!-- Controls: Quantity Stepper & Remove -->
+            
             <div class="cart-item-controls mt-2">
               <div class="qty-pill-group">
                 <button type="button" class="qty-pill-btn btn-cart-dec" data-item-id="${item.id}">-</button>
@@ -968,7 +968,7 @@ class CartShareApp {
                 </div>
               </div>
 
-              <!-- Cost breakdown list -->
+              
               <div class="small border-top pt-2 mt-2">
                 <div class="d-flex justify-content-between text-secondary">
                   <span>Items cost:</span>
@@ -984,7 +984,7 @@ class CartShareApp {
                 </div>
               </div>
 
-              <!-- Items list preview -->
+              
               <div class="mt-2 pt-2 border-top">
                 <small class="text-muted fw-bold d-block mb-1">Items added:</small>
                 <ul class="list-unstyled small mb-0 ps-1 text-muted">
