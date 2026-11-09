@@ -109,11 +109,19 @@ class CartShareApp {
 
     const urlRoom = RoomManager.getUrlRoomCode();
     if (urlRoom) {
-      const pageCodeInput = document.getElementById('pageInputRoomCode');
-      if (pageCodeInput) pageCodeInput.value = urlRoom;
+      const roomExists = StorageService.getRoom(urlRoom);
+      if (roomExists) {
+        const pageCodeInput = document.getElementById('pageInputRoomCode');
+        if (pageCodeInput) pageCodeInput.value = urlRoom;
 
-      const note = document.getElementById('pageRoomDetectedNote');
-      if (note) note.innerHTML = `<span class="badge bg-success-subtle text-success">Invite code ${urlRoom} detected!</span>`;
+        const note = document.getElementById('pageRoomDetectedNote');
+        if (note) note.innerHTML = '<span class="badge bg-success-subtle text-success">Invite code ' + urlRoom + ' detected!</span>';
+      } else {
+        try {
+          const cleanUrl = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, document.title, cleanUrl);
+        } catch (e) {}
+      }
     }
 
     if (user && roomCode) {
@@ -125,6 +133,16 @@ class CartShareApp {
           this.switchView('app');
           this.renderAll();
           return;
+        } else {
+          StorageService.setActiveRoomCode(null);
+          try {
+            const cleanUrl = window.location.origin + window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+          } catch (e) {}
+          const pageCodeInput = document.getElementById('pageInputRoomCode');
+          if (pageCodeInput) pageCodeInput.value = '';
+          const note = document.getElementById('pageRoomDetectedNote');
+          if (note) note.textContent = 'Enter the room code shared by your group, or click "Create Room" above.';
         }
       } catch (err) {
         console.warn('Could not load stored room:', err);
@@ -144,8 +162,16 @@ class CartShareApp {
         if (event.type === 'ROOM_DELETED') {
           this.currentRoom = null;
           StorageService.setActiveRoomCode(null);
+          try {
+            const cleanUrl = window.location.origin + window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+          } catch (e) {}
+          const pageCodeInput = document.getElementById('pageInputRoomCode');
+          if (pageCodeInput) pageCodeInput.value = '';
+          const detectedNote = document.getElementById('pageRoomDetectedNote');
+          if (detectedNote) detectedNote.textContent = 'Enter the room code shared by your group, or click "Create Room" above.';
           this.switchView('login');
-          this.showToast('Room Closed', `Room ${incomingCode} was permanently deleted by the host.`, '🗑️', 'warning');
+          this.showToast('Room Closed', 'Room ' + incomingCode + ' was permanently deleted by the host.', '🗑️', 'warning');
           return;
         }
 
@@ -304,32 +330,22 @@ class CartShareApp {
 
         this.showToast('Room Created', `Room "${this.currentRoom.name}" (${this.currentRoom.code}) is ready!`, '🎉', 'success');
       } else {
-        
         const codeInput = document.getElementById('pageInputRoomCode');
         const code = codeInput ? codeInput.value.trim().toUpperCase() : '';
 
         if (!code) {
-          
-          this.currentRoom = RoomManager.createRoom({
-            name: `${userName}'s Shopping Run`,
-            threshold: 750.00,
-            user
-          });
-        } else {
-          try {
-            this.currentRoom = RoomManager.joinRoom(code, user);
-          } catch (err) {
-            
-            this.currentRoom = RoomManager.createRoom({
-              name: `Room ${code}`,
-              code,
-              threshold: 750.00,
-              user
-            });
-          }
+          alert('Please enter a room code to join, or select the "Create Room" tab to start a new room.');
+          return;
         }
 
-        this.showToast('Room Joined', `Connected to Room ${this.currentRoom.code}!`, '👋', 'success');
+        const existingRoom = StorageService.getRoom(code);
+        if (!existingRoom) {
+          alert('Room "' + code + '" does not exist or has been deleted. Please check the code or select "Create Room" to start a new room.');
+          return;
+        }
+
+        this.currentRoom = RoomManager.joinRoom(code, user);
+        this.showToast('Room Joined', 'Connected to Room ' + this.currentRoom.code + '!', '👋', 'success');
       }
 
       const newUrl = `${window.location.origin}${window.location.pathname}?room=${this.currentRoom.code}`;
@@ -373,8 +389,17 @@ class CartShareApp {
         RoomManager.leaveCurrentRoom(this.currentUser);
       }
       StorageService.clearCurrentUser();
+      StorageService.setActiveRoomCode(null);
       this.currentUser = null;
       this.currentRoom = null;
+      try {
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+      } catch (e) {}
+      const pageCodeInput = document.getElementById('pageInputRoomCode');
+      if (pageCodeInput) pageCodeInput.value = '';
+      const detectedNote = document.getElementById('pageRoomDetectedNote');
+      if (detectedNote) detectedNote.textContent = 'Enter the room code shared by your group, or click "Create Room" above.';
       this.switchView('login');
       this.showToast('Logged Out', 'Returned to the login page.', '👋', 'info');
     }
@@ -387,7 +412,7 @@ class CartShareApp {
     const name = this.currentRoom.name;
 
     const confirmed = confirm(
-      `⚠️ PERMANENT ACTION:\n\nAre you sure you want to permanently delete room "${name}" (${code})?\n\nThis will delete all shared cart items, member records, and history for everyone in this room.`
+      '⚠️ PERMANENT ACTION:\n\nAre you sure you want to permanently delete room "' + name + '" (' + code + ')?\n\nThis will delete all shared cart items, member records, and history for everyone in this room.'
     );
 
     if (confirmed) {
@@ -398,8 +423,20 @@ class CartShareApp {
       RoomManager.deleteRoom(code, this.currentUser);
       this.currentRoom = null;
       StorageService.setActiveRoomCode(null);
+
+      try {
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+      } catch (e) {}
+
+      const pageCodeInput = document.getElementById('pageInputRoomCode');
+      if (pageCodeInput) pageCodeInput.value = '';
+
+      const detectedNote = document.getElementById('pageRoomDetectedNote');
+      if (detectedNote) detectedNote.textContent = 'Enter the room code shared by your group, or click "Create Room" above.';
+
       this.switchView('login');
-      this.showToast('Room Deleted', `Room "${name}" (${code}) was permanently deleted.`, '🗑️', 'warning');
+      this.showToast('Room Deleted', 'Room "' + name + '" (' + code + ') was permanently deleted.', '🗑️', 'warning');
     }
   }
 

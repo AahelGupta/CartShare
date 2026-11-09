@@ -41,12 +41,20 @@ window.addEventListener('storage', (event) => {
     } catch (e) {
       console.error('Failed to parse storage event payload:', e);
     }
-    notifySubscribers({
-      type: 'STORAGE_SYNC',
-      roomCode,
-      roomData,
-      source: 'storage-event'
-    });
+    if (!roomData) {
+      notifySubscribers({
+        type: 'ROOM_DELETED',
+        roomCode,
+        source: 'storage-event'
+      });
+    } else {
+      notifySubscribers({
+        type: 'STORAGE_SYNC',
+        roomCode,
+        roomData,
+        source: 'storage-event'
+      });
+    }
   }
 });
 
@@ -130,7 +138,8 @@ export const StorageService = {
     try {
       localStorage.removeItem(key);
 
-      if (this.getActiveRoomCode() === formattedCode) {
+      const activeCode = this.getActiveRoomCode();
+      if (!activeCode || activeCode.toUpperCase().trim() === formattedCode) {
         this.setActiveRoomCode(null);
       }
 

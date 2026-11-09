@@ -12,11 +12,15 @@ export const RoomManager = {
   },
 
   createRoom({ name, code, threshold = 750.00, user }) {
-    const roomCode = (code || this.generateRoomCode()).toUpperCase().trim();
+    let roomCode = code ? code.toUpperCase().trim() : '';
+    if (!roomCode) {
+      do {
+        roomCode = this.generateRoomCode();
+      } while (StorageService.getRoom(roomCode));
+    }
 
     const existing = StorageService.getRoom(roomCode);
     if (existing) {
-      
       return this.joinRoom(roomCode, user);
     }
 
@@ -73,7 +77,6 @@ export const RoomManager = {
     const existingMemberIndex = room.members.findIndex(m => m.id === user.id || m.name.toLowerCase() === user.name.toLowerCase());
     
     if (existingMemberIndex >= 0) {
-      
       room.members[existingMemberIndex] = {
         ...room.members[existingMemberIndex],
         avatar: user.avatar,
@@ -82,7 +85,6 @@ export const RoomManager = {
         lastSeen: Date.now()
       };
     } else {
-      
       room.members.push({
         id: user.id,
         name: user.name,
