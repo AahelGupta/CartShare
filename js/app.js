@@ -671,7 +671,7 @@ class CartShareApp {
             
             
             <div class="product-img-wrapper">
-              <img src="${prod.image}" alt="${prod.name}" loading="lazy" onerror="this.src='assets/images/placeholder.svg'">
+              <img src="${prod.image}" alt="${prod.name}" loading="lazy" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%2394a3b8\' stroke-width=\'1.5\'%3E%3Cpath d=\'M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z\'/%3E%3Cline x1=\'3\' y1=\'6\' x2=\'21\' y2=\'6\'/%3E%3Cpath d=\'M16 10a4 4 0 0 1-8 0\'/%3E%3C/svg%3E'">
               ${prod.badge ? `<span class="badge bg-${prod.badgeColor || 'primary'} product-badge-overlay">${prod.badge}</span>` : ''}
               ${cartQty > 0 ? `<span class="product-in-cart-indicator"><i class="bi bi-cart-check-fill me-1"></i>${cartQty} in cart</span>` : ''}
             </div>
