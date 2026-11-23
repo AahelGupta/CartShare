@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,100:10B981&height=200&section=header&text=CartShare%20Collaborative%20Shopping&fontSize=38&fontAlignY=38&animation=twinkling&desc=Real-Time%20Multi-Tab%20Collaborative%20Cart%20%26%20Fair%20Expense%20Splitting&descSize=18&descAlignY=62" width="100%" alt="CartShare Capsule Header"/>
+  <img src="assets/capsule-header.svg" width="100%" alt="CartShare Capsule Header"/>
 
   <br/><br/>
 
@@ -85,8 +85,11 @@ CartShare/
 │   ├── storage.js          # LocalStorage persistence & BroadcastChannel sync
 │   └── products.js         # Curated catalog of 100 products with realistic pricing
 └── assets/
-    └── icons/
-        └── logo.svg        # Scalable vector logo and favicon
+    ├── icons/
+    │   └── logo.svg          # Scalable vector logo and favicon
+    ├── capsule-header.svg    # Animated waving banner header
+    ├── capsule-footer.svg    # Waving footer banner
+    └── preview.png           # High-resolution application preview screenshot
 ```
 
 ---
@@ -146,5 +149,5 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more details.
 <br/>
 
 <div align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,100:10B981&height=120&section=footer" width="100%" alt="CartShare Capsule Footer"/>
+  <img src="assets/capsule-footer.svg" width="100%" alt="CartShare Capsule Footer"/>
 </div>
