@@ -1,0 +1,98 @@
+<svg
+  width="854"
+  height="200"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  style="z-index:1;position:relative"
+  viewBox="0 0 854 200"
+>
+  <style>
+    .text {
+      font-size: 38px;
+      font-weight: 700;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      fill: #ffffff;
+      animation: twinkling 4s ease-in-out infinite;
+    }
+    .desc {
+      font-size: 18px;
+      font-weight: 500;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      fill: #e2e8f0;
+      animation: twinkling 4s ease-in-out infinite;
+    }
+    @keyframes twinkling {
+      40% { opacity: 1; }
+      50% { opacity: 0.6; }
+      60% { opacity: 1; }
+      70% { opacity: 0.6; }
+      80% { opacity: 1; }
+    }
+  </style>
+
+  <defs>
+    <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <g transform="translate(427, 100) scale(1, 1) translate(-427, -100)">
+    <!-- Base Wave Layer -->
+    <path
+      d="M0 0L 0 135Q 213.5 180 427 150T 854 160L 854 0 Z"
+      fill="url(#linear)"
+      opacity="0.8"
+    >
+      <animate
+        attributeName="d"
+        dur="20s"
+        repeatCount="indefinite"
+        keyTimes="0;0.333;0.667;1"
+        calcMode="spline"
+        keySplines="0.2 0 0.2 1;0.2 0 0.2 1;0.2 0 0.2 1"
+        begin="-10s"
+        values="M0 0L 0 135Q 213.5 180 427 150T 854 160L 854 0 Z;M0 0L 0 150Q 213.5 120 427 120T 854 140L 854 0 Z;M0 0L 0 145Q 213.5 125 427 150T 854 165L 854 0 Z;M0 0L 0 135Q 213.5 180 427 150T 854 160L 854 0 Z"
+      />
+    </path>
+
+    <!-- Top Accent Wave Layer -->
+    <path
+      d="M0 0L 0 120Q 213.5 160 427 130T 854 155L 854 0 Z"
+      fill="url(#linear)"
+      opacity="0.95"
+    >
+      <animate
+        attributeName="d"
+        dur="20s"
+        repeatCount="indefinite"
+        keyTimes="0;0.333;0.667;1"
+        calcMode="spline"
+        keySplines="0.2 0 0.2 1;0.2 0 0.2 1;0.2 0 0.2 1"
+        begin="0s"
+        values="M0 0L 0 120Q 213.5 160 427 130T 854 155L 854 0 Z;M0 0L 0 145Q 213.5 160 427 140T 854 130L 854 0 Z;M0 0L 0 165Q 213.5 135 427 165T 854 130L 854 0 Z;M0 0L 0 120Q 213.5 160 427 130T 854 155L 854 0 Z"
+      />
+    </path>
+  </g>
+
+  <text
+    text-anchor="middle"
+    dominant-baseline="middle"
+    x="50%"
+    y="38%"
+    class="text"
+    filter="url(#shadow)"
+  >CartShare Collaborative Shopping</text>
+
+  <text
+    text-anchor="middle"
+    dominant-baseline="middle"
+    x="50%"
+    y="62%"
+    class="desc"
+    filter="url(#shadow)"
+  >Real-Time Multi-Tab Collaborative Cart &amp; Fair Expense Splitting</text>
+</svg>
