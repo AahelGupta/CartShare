@@ -1,6 +1,6 @@
 <div align="center">
 
-  <img src="assets/capsule-header.svg" width="100%" alt="CartShare Capsule Header"/>
+  <img src="assets/capsule-header.png" width="100%" alt="CartShare Capsule Header"/>
 
   <br/><br/>
 
@@ -87,8 +87,8 @@ CartShare/
 └── assets/
     ├── icons/
     │   └── logo.svg          # Scalable vector logo and favicon
-    ├── capsule-header.svg    # Animated waving banner header
-    ├── capsule-footer.svg    # Waving footer banner
+    ├── capsule-header.png    # High-resolution waving banner header
+    ├── capsule-footer.png    # Waving footer banner
     └── preview.png           # High-resolution application preview screenshot
 ```
 
@@ -149,5 +149,5 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more details.
 <br/>
 
 <div align="center">
-  <img src="assets/capsule-footer.svg" width="100%" alt="CartShare Capsule Footer"/>
+  <img src="assets/capsule-footer.png" width="100%" alt="CartShare Capsule Footer"/>
 </div>
