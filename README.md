@@ -1,8 +1,8 @@
 <div align="center">
 
-  ![Capsule Header](https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,100:10B981&height=180&section=header&text=CartShare%20Collaborative%20Shopping&fontSize=38&animation=twinkling&desc=Real-Time%20Multi-Tab%20Collaborative%20Cart%20%26%20Fair%20Expense%20Splitting)
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,100:10B981&height=200&section=header&text=CartShare%20Collaborative%20Shopping&fontSize=38&fontAlignY=38&animation=twinkling&desc=Real-Time%20Multi-Tab%20Collaborative%20Cart%20%26%20Fair%20Expense%20Splitting&descSize=18&descAlignY=62" width="100%" alt="CartShare Capsule Header"/>
 
-  <br/>
+  <br/><br/>
 
   [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
   [![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
@@ -142,3 +142,9 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more details.
 - 💼 LinkedIn: [@aahel-gupta](https://www.linkedin.com/in/aahel-gupta-5b9a5840a)
 - 🐙 GitHub: [@AahelGupta](https://github.com/AahelGupta)
 - 📧 Email: aahelgupta47@gmail.com
+
+<br/>
+
+<div align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F172A,100:10B981&height=120&section=footer" width="100%" alt="CartShare Capsule Footer"/>
+</div>
